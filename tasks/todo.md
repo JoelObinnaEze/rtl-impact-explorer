@@ -15,7 +15,7 @@
   - Verify: `py -m unittest tests.test_report -v`, then browser inspection.
   - Files: `tests/test_report.py`, `src/rtl_impact_explorer/report.py`, `src/rtl_impact_explorer/web/*`
 
-- [ ] Add CLI workflows, example, and user documentation.
+- [x] Add CLI workflows, example, and user documentation.
   - Acceptance: both public commands follow documented exit/error behavior and the sample command creates a report.
   - Verify: `py -m unittest discover -s tests -v`
   - Files: `tests/test_cli.py`, `src/rtl_impact_explorer/cli.py`, `src/rtl_impact_explorer/__main__.py`, `examples/*`, `README.md`, `pyproject.toml`

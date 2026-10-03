@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rtl-impact-explorer"
+version = "0.1.0"
+description = "Interactive driver/load tracing for elaborated SystemVerilog designs"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = ["systemverilog", "verilog", "rtl", "verilator", "eda"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
+]
+dependencies = []
+
+[project.scripts]
+rtl-impact = "rtl_impact_explorer.cli:entrypoint"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+rtl_impact_explorer = ["web/*.html", "web/*.css", "web/*.js"]

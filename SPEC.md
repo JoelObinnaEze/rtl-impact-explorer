@@ -31,7 +31,7 @@ py -m unittest discover -s tests -v
 py -m rtl_impact_explorer analyze-json obj_dir/Vtop.tree.json --output report
 
 # Run Verilator and generate a report
-py -m rtl_impact_explorer analyze examples/counter_top.sv --top counter_top --output report
+py -m rtl_impact_explorer analyze examples/counter_top.sv --top counter_top --output report --engine auto
 
 # Preview the generated artifact
 py -m http.server 8000 --directory report
@@ -43,13 +43,14 @@ py -m http.server 8000 --directory report
 
 ```text
 rtl-impact analyze-json INPUT --output DIR [--title TITLE]
-rtl-impact analyze SOURCE... --top MODULE --output DIR [--verilator PATH]
+rtl-impact analyze SOURCE... --top MODULE --output DIR [--engine auto|local|docker] [--verilator PATH]
 ```
 
 - Successful commands return exit code `0`.
 - User/input/tool errors return exit code `1` and a single `error: ...` message on stderr.
 - `--help` and argparse usage errors retain argparse's standard behavior.
 - Existing output assets are replaced file-by-file; unrelated files in the output directory are preserved.
+- `--engine auto` prefers a native Verilator executable and falls back to the official `verilator/verilator:latest` Docker image.
 
 ### Report data schema
 
@@ -141,4 +142,3 @@ class Signal:
 
 - Which real-world open-source core should become the public benchmark after the sample design?
 - Should the first post-MVP release prioritize Git change-impact mode or clock/reset-domain analysis?
-
