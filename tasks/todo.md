@@ -10,7 +10,7 @@
   - Verify: `py -m unittest tests.test_signal_graph -v`
   - Files: `tests/test_signal_graph.py`, `src/rtl_impact_explorer/signal_graph.py`
 
-- [ ] Generate a self-contained interactive report.
+- [x] Generate a self-contained interactive report.
   - Acceptance: output includes the schema payload and all local assets required from `file://`.
   - Verify: `py -m unittest tests.test_report -v`, then browser inspection.
   - Files: `tests/test_report.py`, `src/rtl_impact_explorer/report.py`, `src/rtl_impact_explorer/web/*`
