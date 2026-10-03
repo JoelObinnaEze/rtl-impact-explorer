@@ -1,6 +1,6 @@
 # Tasks
 
-- [ ] Capture a real Verilator 5.052 JSON fixture and add failing ingestion tests.
+- [x] Capture a real Verilator 5.052 JSON fixture and add failing ingestion tests.
   - Acceptance: modules, signals, locations, and assignments are represented in a typed model.
   - Verify: `py -m unittest tests.test_verilator_json -v`
   - Files: `tests/fixtures/*`, `tests/test_verilator_json.py`, `src/rtl_impact_explorer/model.py`, `src/rtl_impact_explorer/verilator_json.py`
