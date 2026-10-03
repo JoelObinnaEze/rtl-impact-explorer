@@ -287,9 +287,9 @@ def _add_process_edges(
             if signal_id is None:
                 continue
             access = str(node.get("access") or "")
-            if "R" in access:
+            if access in {"RD", "RW"}:
                 reads.add(signal_id)
-            if "W" in access:
+            if access in {"WR", "RW"}:
                 writes.add(signal_id)
 
         kind = _process_kind(statement)

@@ -5,7 +5,7 @@
   - Verify: `py -m unittest tests.test_verilator_json -v`
   - Files: `tests/fixtures/*`, `tests/test_verilator_json.py`, `src/rtl_impact_explorer/model.py`, `src/rtl_impact_explorer/verilator_json.py`
 
-- [ ] Build directional signal graph queries test-first.
+- [x] Build directional signal graph queries test-first.
   - Acceptance: direct and bounded transitive drivers/loads are deterministic and deduplicated.
   - Verify: `py -m unittest tests.test_signal_graph -v`
   - Files: `tests/test_signal_graph.py`, `src/rtl_impact_explorer/signal_graph.py`
