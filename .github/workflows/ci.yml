@@ -16,7 +16,7 @@ concurrency:
 jobs:
   quality:
     name: Python ${{ matrix.python-version }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -51,7 +51,7 @@ jobs:
 
   verilator-examples:
     name: Verilator examples
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     steps:
