@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: python -m pip install --disable-pip-version-check .
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Compile Python sources
+        run: python -m compileall -q src
+
+      - name: Check browser JavaScript
+        run: |
+          node --check src/rtl_impact_explorer/web/app.js
+          node --check src/rtl_impact_explorer/web/graph-view.js
+
+      - name: Build wheel
+        run: python -m pip wheel . --no-deps --wheel-dir dist
+
+  verilator-examples:
+    name: Verilator examples
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.13"
+
+      - name: Install package
+        run: python -m pip install --disable-pip-version-check .
+
+      - name: Analyze every example with Docker Verilator
+        run: |
+          rtl-impact analyze examples/counter_top.sv \
+            --top counter_top \
+            --output "$RUNNER_TEMP/counter-report" \
+            --engine docker
+          rtl-impact analyze examples/uart_tx.sv \
+            --top uart_tx \
+            --output "$RUNNER_TEMP/uart-report" \
+            --engine docker
+          rtl-impact analyze examples/traffic_light_controller.sv \
+            --top traffic_light_controller \
+            --output "$RUNNER_TEMP/traffic-report" \
+            --engine docker
+
+      - name: Verify generated reports
+        run: |
+          test -s "$RUNNER_TEMP/counter-report/index.html"
+          test -s "$RUNNER_TEMP/uart-report/index.html"
+          test -s "$RUNNER_TEMP/traffic-report/index.html"
