@@ -9,5 +9,5 @@ __pycache__/
 build/
 dist/
 report/
+report-*/
 obj_dir/
-
