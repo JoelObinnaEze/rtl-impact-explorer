@@ -1,5 +1,7 @@
 # RTL Impact Explorer
 
+[![CI](https://github.com/JoelObinnaEze/rtl-impact-explorer/actions/workflows/ci.yml/badge.svg)](https://github.com/JoelObinnaEze/rtl-impact-explorer/actions/workflows/ci.yml)
+
 RTL Impact Explorer is a static-analysis tool for tracing how signals influence each other across an elaborated SystemVerilog design.
 
 Click a signal to see its direct drivers and loads, follow a bounded dependency cone across module boundaries, and jump back to the source location that created each connection. The output is a self-contained browser report, so it can be shared or opened locally without running a server.
@@ -21,6 +23,16 @@ I built RTL Impact Explorer to make that investigation visual. It is inspired by
 - Filters signals by name or module hierarchy.
 - Exports a responsive, keyboard-accessible report with no CDN or runtime dependency.
 - Runs through a native Verilator installation or an automatic Docker fallback.
+
+## Included examples
+
+| Design | Top module | What it exercises |
+| --- | --- | --- |
+| [Counter](examples/counter_top.sv) | `counter_top` | Counter state, terminal-count detection, and a child divider module |
+| [UART transmitter](examples/uart_tx.sv) | `uart_tx` | Framing state machine, shift register, baud generator, and cross-module tick control |
+| [Traffic-light controller](examples/traffic_light_controller.sv) | `traffic_light_controller` | Four-state controller, pedestrian request latching, and a reusable phase timer |
+
+CI runs all three designs through Dockerized Verilator and confirms that each one produces a complete browser report.
 
 ## Quick start
 
